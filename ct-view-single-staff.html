@@ -8,7 +8,8 @@
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../iron-form/iron-form.html">
-<link rel="import" href="../ct-application-theme/shared-styles.html">
+<link rel="import" href="../ct-shared-styles/ct-application-theme.html">
+<link rel="import" href="../ct-editable-switcher/ct-editable-switcher.html">
 
 <!--
 `ct-view-single-staff`
@@ -18,50 +19,50 @@ View a single staff member
 -->
 
 <dom-module id="ct-view-single-staff">
-<link rel="import" href="../global-styles.css" type="css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <template>
-  <style is="custom-style" include="custom-style shared-styles iron-flex iron-flex-alignment">
-  :host {
-    --paper-input-error: {
-      color:#00ff00;
-    };
+    <style is="custom-style" include="custom-style shared-styles iron-flex iron-flex-alignment">
+      :host {
+        --paper-input-error: {
+          color:#00ff00;
+        };
 
-    --paper-input-container:  {
-      border-top:1px solid #ccc;
-      border-left:1px solid #ccc;
-      border-right:1px solid #ccc;
-      border-bottom: none;
-      padding: 0;
-      margin-bottom: 24px;
-    };
+        --paper-input-container:  {
+          border-top:1px solid #ccc;
+          border-left:1px solid #ccc;
+          border-right:1px solid #ccc;
+          border-bottom: none;
+          padding: 0;
+          margin-bottom: 24px;
+        };
 
-    /*padding to move from border */
-    --paper-input-container-input: {
-      padding-left: 10px;
-      left: auto;
-    };
+        /*padding to move from border */
+        --paper-input-container-input: {
+          padding-left: 10px;
+          left: auto;
+        };
 
-    --paper-input-container-label: {
-      margin-left: 10px;
-    };
-    --paper-input-container-label-floating: {
-      margin-left: 10px;
-    };
+        --paper-input-container-label: {
+          margin-left: 10px;
+        };
+        --paper-input-container-label-floating: {
+          margin-left: 10px;
+        };
 
-    --paper-input-errorz:
-    {
-      margin-left: 10px;
-      padding-left: 10px;
-    };
+        --paper-input-errorz:
+        {
+          margin-left: 10px;
+          padding-left: 10px;
+        };
 
-    --paper-input-error: {
-      left: auto !important;
-      right: 20px !important;
-      font-style: italic;
-    };
+        --paper-input-error: {
+          left: auto !important;
+          right: 20px !important;
+          font-style: italic;
+        };
 
-    --paper-icon-button-ink-color: var(--breadcrumb-icon-color-ripple);
-  }
+        --paper-icon-button-ink-color: var(--breadcrumb-icon-color-ripple);
+      }
       /* ### FONTS
           @font-face {font-family: Avenir;
               src: url(../fonts/avenir-lt-std-65-medium-58904de1bad61.otf);
@@ -88,196 +89,190 @@ View a single staff member
       */
 
 
-  /* local color for button */
-  paper-button.fancy {
-    background: var(--sec-hover);
-    color: indigo;
-  }
-  /*local dropdown menu */
-  paper-dropdown-menu.custom-dropdown {
-      width: 100%;
-    --paper-input-container: {
-      border-top:1px solid #ccc;
-      border-left:1px solid #ccc;
-      border-right:1px solid #ccc;
-      border-bottom: none;
-      padding: 0;
-      margin-bottom: 8px;
-    };
-    --paper-input-container-input: {
-      padding-left: 10px;
-    };
-  }
+      /* local color for button */
+      paper-button.fancy {
+        background: var(--sec-hover);
+        color: indigo;
+      }
+      /*local dropdown menu */
+      paper-dropdown-menu.custom-dropdown {
+        width: 100%;
+        --paper-input-container: {
+          border-top:1px solid #ccc;
+          border-left:1px solid #ccc;
+          border-right:1px solid #ccc;
+          border-bottom: none;
+          padding: 0;
+          margin-bottom: 8px;
+        };
+        --paper-input-container-input: {
+          padding-left: 10px;
+        };
+      }
 
 
-  </style>
+    </style>
     <div class="container main-section">
-      <!-- <div class="row">
-        <div class="col-xs-12">
-          <div class="notif">
-            <span>Notification Message:</span><br/>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</span>
-            <a href="#" title="close" class="close-icon">
-              <img src="../images/close-icon.png" alt="Close" title="Close">
-            </a>
-          </div>
-        </div>
-      </div> -->
       <div class="row">
-        <div class="col-xs-12 notif">
-          <span>Notification Message: </span>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          <a href="#" title="close" class="close-icon">
-            <img src="../images/close-icon.png" alt="Close" title="Close">
-          </a>
-        </div>
         <div class="col-xs-12 primary-box-container">
 
-            <div class="row">
-              <div class="col-xs-12 col-sm-8">
-                <h3 class="ct-header"><paper-icon-button icon="chevron-left" class="testingripple breadcrumb-icon"></paper-icon-button> John Doe</h3>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <paper-button class="fancy margin-10v pull-right">Delete</paper-button> <paper-button class="fancy margin-10v pull-right">Edit</paper-button>
-              </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-8">
+              <h3 class="ct-header">[[userData.name]]</h3>
             </div>
+            <div class="col-xs-12 col-sm-4">
+              <paper-button class="fancy margin-10v pull-right btn btn-primary" on-tap="_deleteUser">Delete</paper-button>
+              <!--<paper-button class="fancy margin-10v pull-right btn btn-primary" on-tap="_editUser">Edit</paper-button>-->
+            </div>
+          </div>
         </div>
       </div>
 
-        <div class="container-fluid">
-          <div class="row">
+      <div class="container-fluid">
+        <div class="row">
 
-            <div class="col-sm-6 col-xs-12">
-              <div class="form-group">
-                  <paper-input class="testing" disabled autocapitalize label="First Name" type="text" name="First Name" value="John" required auto-validate error-message="Name Required">Something here</paper-input>
-              </div>
-              <div class="form-group">
-                  <paper-input input="iron-input" disabled autocapitalize="words" label="Last Name" type="text" name="Last Name" value="Doe" required auto-validate error-message="Last Name Required"></paper-input>
-              </div>
-              <div class="form-group">
-                  <paper-input label="Email" disabled type="text" name="Email" value="johndoe@example.com" required auto-validate error-message="Email Required"></paper-input>
-              </div>
+          <div class="col-sm-6 col-xs-12">
+            <div class="form-group">
+              <paper-input class="testing" disabled autocapitalize label="First Name" type="text" name="First Name" value="John" required auto-validate error-message="Name Required">Something here</paper-input>
             </div>
-            <div class="col-sm-6 col-xs-12">
-              <div class="form-group">
-                  <paper-input disabled label="SA ID Number / Passport Number" type="text" name="Id Number" value="JNABDF13" auto-validate pattern="[a-zA-Z 0-9]*" error-message="Require letters and numbers"></paper-input>
-              </div>
-              <div class="form-group">
-                  <paper-input label="Mobile" disabled type="text" preventInvalidInput name="Mobile" value="0821234567" auto-validate pattern="[0-9 +]*" char-counter error-message="Numbers only"></paper-input>
-              </div>
-              <div class="form-group">
-                <paper-input label="Mobile" disabled type="text" preventInvalidInput name="Mobile" value="Support Agent"></paper-input>
-              </div>
+            <div class="form-group">
+              <paper-input input="iron-input" disabled autocapitalize="words" label="Last Name" type="text" name="Last Name" value="Doe" required auto-validate error-message="Last Name Required"></paper-input>
+            </div>
+            <div class="form-group">
+              <paper-input label="Email" disabled type="text" name="Email" value="johndoe@example.com" required auto-validate error-message="Email Required"></paper-input>
             </div>
           </div>
-
+          <div class="col-sm-6 col-xs-12">
+            <div class="form-group">
+              <paper-input disabled label="SA ID Number / Passport Number" type="text" name="Id Number" value="JNABDF13" auto-validate pattern="[a-zA-Z 0-9]*" error-message="Require letters and numbers"></paper-input>
+            </div>
+            <div class="form-group">
+              <paper-input label="Mobile" disabled type="text" preventInvalidInput name="Mobile" value="0821234567" auto-validate pattern="[0-9 +]*" char-counter error-message="Numbers only"></paper-input>
+            </div>
+            <div class="form-group">
+              <paper-input label="Mobile" disabled type="text" preventInvalidInput name="Mobile" value="Support Agent"></paper-input>
+            </div>
+          </div>
         </div>
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="row">
-                <h5>Filter</h5>
-                <div class="col-xs-12 col-sm-4">
-                  <paper-input label="To" placeholder="Search for building name, address, status" type="text" name="To" value="" auto-validate pattern="[a-zA-Z 0-9]*" error-message="Require letters and numbers"></paper-input>
-                </div>
-                <div class="col-xs-12 col-sm-4">
-                  <paper-input label="From" placeholder="Search for building name, address, status" type="text" name="From" value="" auto-validate pattern="[a-zA-Z 0-9]*" error-message="Require letters and numbers"></paper-input>
-                </div>
-                <div class="col-xs-4 col-sm-2">
-                  <paper-button class="fancy" type="button" name="button">Filter</paper-button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th>Ticket Ref</th>
-                      <th>Time Start</th>
-                      <th>Time End</th>
-                      <th>Duration</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="success">
-                      <th scope="row">1234567890</th>
-                      <td>2017 / 01 / 01 12:00</td>
-                      <td>2017 / 01 / 01 13:00</td>
-                      <td>50s</td>
-                      <td>Resolved</td>
-                    </tr>
-                    <tr class="warning">
-                      <th scope="row">1234567890</th>
-                      <td>2017 / 01 / 01 12:00</td>
-                      <td>2017 / 01 / 01 13:00</td>
-                      <td>50s</td>
-                      <td>Escalated</td>
-                    </tr>
-                    <tr class="success">
-                      <th scope="row">1234567890</th>
-                      <td>2017 / 01 / 01 12:00</td>
-                      <td>2017 / 01 / 01 13:00</td>
-                      <td>50s</td>
-                      <td>Resolved</td>
-                    </tr>
-                    <tr class="info">
-                      <th scope="row">1234567890</th>
-                      <td>2017 / 01 / 01 12:00</td>
-                      <td>2017 / 01 / 01 13:00</td>
-                      <td>50s</td>
-                      <td>In Progress</td>
-                    </tr>
-                    <tr class="info">
-                      <th scope="row">1234567890</th>
-                      <td>2017 / 01 / 01 12:00</td>
-                      <td>2017 / 01 / 01 13:00</td>
-                      <td>50s</td>
-                      <td>In Progress</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <nav aria-label="Page navigation">
-                <ul class="pager">
-                  <li>
-                    <a href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li><a href="#">1</a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                  <li><a href="#">4</a></li>
-                  <li><a href="#">5</a></li>
-                  <li>
-                    <a href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div> <!-- Staff table Container -->
+
+      </div>
+
+      <!--todo: integrate with zendesk for ticketing-->
+      <!--<div class="container-fluid">-->
+      <!--<div class="row">-->
+      <!--<div class="col-xs-12">-->
+      <!--<div class="row">-->
+      <!--<h5>Filter</h5>-->
+      <!--<div class="col-xs-12 col-sm-4">-->
+      <!--<paper-input label="To" placeholder="Search for building name, address, status" type="text" name="To" value="" auto-validate pattern="[a-zA-Z 0-9]*" error-message="Require letters and numbers"></paper-input>-->
+      <!--</div>-->
+      <!--<div class="col-xs-12 col-sm-4">-->
+      <!--<paper-input label="From" placeholder="Search for building name, address, status" type="text" name="From" value="" auto-validate pattern="[a-zA-Z 0-9]*" error-message="Require letters and numbers"></paper-input>-->
+      <!--</div>-->
+      <!--<div class="col-xs-4 col-sm-2">-->
+      <!--<paper-button class="fancy" type="button" name="button">Filter</paper-button>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
+
+
+      <!--<div class="row">-->
+      <!--<div class="col-xs-12">-->
+      <!--<div class="table-responsive">-->
+      <!--<table class="table table-striped table-bordered table-hover">-->
+      <!--<thead>-->
+      <!--<tr>-->
+      <!--<th>Ticket Ref</th>-->
+      <!--<th>Time Start</th>-->
+      <!--<th>Time End</th>-->
+      <!--<th>Duration</th>-->
+      <!--<th>Status</th>-->
+      <!--</tr>-->
+      <!--</thead>-->
+      <!--<tbody>-->
+      <!--<tr class="success">-->
+      <!--<th scope="row">1234567890</th>-->
+      <!--<td>2017 / 01 / 01 12:00</td>-->
+      <!--<td>2017 / 01 / 01 13:00</td>-->
+      <!--<td>50s</td>-->
+      <!--<td>Resolved</td>-->
+      <!--</tr>-->
+      <!--<tr class="warning">-->
+      <!--<th scope="row">1234567890</th>-->
+      <!--<td>2017 / 01 / 01 12:00</td>-->
+      <!--<td>2017 / 01 / 01 13:00</td>-->
+      <!--<td>50s</td>-->
+      <!--<td>Escalated</td>-->
+      <!--</tr>-->
+      <!--<tr class="success">-->
+      <!--<th scope="row">1234567890</th>-->
+      <!--<td>2017 / 01 / 01 12:00</td>-->
+      <!--<td>2017 / 01 / 01 13:00</td>-->
+      <!--<td>50s</td>-->
+      <!--<td>Resolved</td>-->
+      <!--</tr>-->
+      <!--<tr class="info">-->
+      <!--<th scope="row">1234567890</th>-->
+      <!--<td>2017 / 01 / 01 12:00</td>-->
+      <!--<td>2017 / 01 / 01 13:00</td>-->
+      <!--<td>50s</td>-->
+      <!--<td>In Progress</td>-->
+      <!--</tr>-->
+      <!--<tr class="info">-->
+      <!--<th scope="row">1234567890</th>-->
+      <!--<td>2017 / 01 / 01 12:00</td>-->
+      <!--<td>2017 / 01 / 01 13:00</td>-->
+      <!--<td>50s</td>-->
+      <!--<td>In Progress</td>-->
+      <!--</tr>-->
+      <!--</tbody>-->
+      <!--</table>-->
+      <!--</div>-->
+      <!--<nav aria-label="Page navigation">-->
+      <!--<ul class="pager">-->
+      <!--<li>-->
+      <!--<a href="#" aria-label="Previous">-->
+      <!--<span aria-hidden="true">&laquo;</span>-->
+      <!--</a>-->
+      <!--</li>-->
+      <!--<li><a href="#">1</a></li>-->
+      <!--<li><a href="#">2</a></li>-->
+      <!--<li><a href="#">3</a></li>-->
+      <!--<li><a href="#">4</a></li>-->
+      <!--<li><a href="#">5</a></li>-->
+      <!--<li>-->
+      <!--<a href="#" aria-label="Next">-->
+      <!--<span aria-hidden="true">&raquo;</span>-->
+      <!--</a>-->
+      <!--</li>-->
+      <!--</ul>-->
+      <!--</nav>-->
+      <!--</div>-->
+      <!--</div>-->
+
+    </div> <!-- Staff table Container -->
 
     </div>
   </template>
 
   <script>
-    Polymer({
+      Polymer({
 
-      is: 'ct-view-single-staff',
+          is: 'ct-view-single-staff',
 
-      properties: {
-        prop1: {
-          type: String,
-          value: 'ct-view-single-staff',
-        },
-      },
+          properties: {
+              userData : Object
+          },
 
-    });
+          _deleteUser : function(){
+              this.fire('deleteStaff', this.userData.id);
+          },
+
+//        _editUser : function(){
+//            this.fire('editStaff', this.userData.id);
+//        },
+
+      });
   </script>
 </dom-module>
