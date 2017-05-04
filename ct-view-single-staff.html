@@ -7,6 +7,8 @@
 <link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+
 <link rel="import" href="../iron-form/iron-form.html">
 <link rel="import" href="../ct-shared-styles/ct-application-theme.html">
 <link rel="import" href="../ct-editable-switcher/ct-editable-switcher.html">
@@ -323,12 +325,15 @@ View a single staff member
 
     </div> <!-- Staff table Container -->
 
-    <paper-dialog id="deleteModal" modal>
+    <paper-dialog
+            id="deleteModal"
+            modal
+            on-iron-overlay-opened="_patchOverlay">
       <h2>Confirm Delete</h2>
       <p>Are you sure you want to delete this staff member?</p>
       <div class="buttons">
         <paper-button class="btn btn-link" dialog-dismiss>Cancel</paper-button>
-        <paper-button class="btn btn-primary" on-tap="_deleteUser" autofocus>Delete</paper-button>
+        <paper-button class="btn btn-primary" on-tap="_deleteUser" autofocus raised>Delete</paper-button>
       </div>
     </paper-dialog>
 
@@ -352,7 +357,7 @@ View a single staff member
           },
 
           _openDeleteModal : function(){
-            this.$.deleteModal.open();
+              this.$.deleteModal.open();
           },
 
           _deleteUser : function(){
@@ -389,7 +394,13 @@ View a single staff member
 
               this.fire('editStaff', form.serialize());
               this._toggleStatus();
-          }
+          },
+
+          _patchOverlay: function (e) {
+              if (e.target.withBackdrop) {
+                  e.target.parentNode.insertBefore(e.target.backdropElement, e.target);
+              }
+          },
 
 
       });
