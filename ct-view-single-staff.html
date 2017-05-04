@@ -21,7 +21,7 @@ View a single staff member
 <dom-module id="ct-view-single-staff">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <template>
-    <style is="custom-style" include="custom-style shared-styles iron-flex iron-flex-alignment">
+    <style is="custom-style">
       :host {
         --paper-input-error: {
           color:#00ff00;
@@ -112,6 +112,7 @@ View a single staff member
 
 
     </style>
+
     <div class="container main-section">
       <div class="row">
         <div class="col-xs-12 primary-box-container">
@@ -121,41 +122,110 @@ View a single staff member
               <h3 class="ct-header">[[userData.name]]</h3>
             </div>
             <div class="col-xs-12 col-sm-4">
-              <paper-button class="fancy margin-10v pull-right btn btn-primary" on-tap="_deleteUser">Delete</paper-button>
-              <!--<paper-button class="fancy margin-10v pull-right btn btn-primary" on-tap="_editUser">Edit</paper-button>-->
+              <paper-button class="fancy margin-10v pull-right btn btn-primary" on-tap="_openDeleteModal">Delete</paper-button>
+              <paper-button class$="fancy margin-10v pull-right btn btn-primary [[_computeBtnStyle(_isStateEdit)]]" on-tap="_editBtnHandler">[[_computeButtonText(_isStateEdit)]]</paper-button>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="container-fluid">
+      <form class="container-fluid" is="iron-form">
         <div class="row">
 
           <div class="col-sm-6 col-xs-12">
             <div class="form-group">
-              <paper-input class="testing" disabled autocapitalize label="First Name" type="text" name="firstName" value="John" required auto-validate error-message="Name Required">[[userData.firstName]]</paper-input>
+              <ct-editable-switcher edit-mode$="[[_isStateEdit]]">
+                <paper-input
+                        class="input-element"
+                        autocapitalize
+                        label="First Name"
+                        type="text"
+                        name="firstName"
+                        value="[[userData.firstName]]"
+                        required
+                        auto-validate
+                        error-message="Please provide a first name"></paper-input>
+              </ct-editable-switcher>
+
             </div>
             <div class="form-group">
-              <paper-input input="iron-input" disabled autocapitalize="words" label="Last Name" type="text" name="Last Name" value="Doe" required auto-validate error-message="Last Name Required"></paper-input>
+              <ct-editable-switcher edit-mode$="[[_isStateEdit]]">
+                <paper-input
+                        class="input-element"
+                        label="Last Name"
+                        type="text"
+                        name="lastName"
+                        value="[[userData.lastName]]"
+                        required
+                        auto-validate
+                        error-message="Please provide a last name"></paper-input>
+              </ct-editable-switcher>
             </div>
             <div class="form-group">
-              <paper-input label="Email" disabled type="text" name="Email" value="johndoe@example.com" required auto-validate error-message="Email Required"></paper-input>
+              <ct-editable-switcher edit-mode$="[[_isStateEdit]]">
+                <paper-input
+                        class="input-element"
+                        label="Email"
+                        type="email"
+                        name="email"
+                        value="[[userData.email]]"
+                        required
+                        auto-validate
+                        error-message="Please enter a valid email address"></paper-input>
+              </ct-editable-switcher>
             </div>
           </div>
           <div class="col-sm-6 col-xs-12">
             <div class="form-group">
-              <paper-input disabled label="SA ID Number / Passport Number" type="text" name="Id Number" value="JNABDF13" auto-validate pattern="[a-zA-Z 0-9]*" error-message="Require letters and numbers"></paper-input>
+              <ct-editable-switcher edit-mode$="[[_isStateEdit]]">
+                <paper-input
+                        class="input-element"
+                        label="SA ID Number / Passport Number"
+                        type="text"
+                        name="idNum"
+                        value="[[userData.idNum]]"
+                        auto-validate
+                        allowed-pattern="[a-zA-Z 0-9]"
+                        prevent-invalid-input
+                        error-message="Require letters and numbers"></paper-input>
+              </ct-editable-switcher>
             </div>
             <div class="form-group">
-              <paper-input label="Mobile" disabled type="text" preventInvalidInput name="Mobile" value="0821234567" auto-validate pattern="[0-9 +]*" char-counter error-message="Numbers only"></paper-input>
+              <ct-editable-switcher edit-mode$="[[_isStateEdit]]">
+                <paper-input
+                        class="input-element"
+                        label="Mobile"
+                        type="text"
+                        prevent-invalid-input
+                        name="mobile"
+                        value="[[userData.mobile]]"
+                        auto-validate
+                        pattern="[0-9 +]"
+                        char-counter
+                        error-message="Numbers only"></paper-input>
+              </ct-editable-switcher>
             </div>
             <div class="form-group">
-              <paper-input label="Mobile" disabled type="text" preventInvalidInput name="Mobile" value="Support Agent"></paper-input>
+              <ct-editable-switcher edit-mode$="[[_isStateEdit]]">
+                <paper-dropdown-menu
+                        class="input-element"
+                        label="Staff Group"
+                        noink
+                        no-animations
+                        required
+                        placeholder="Please select a staff group">
+                  <paper-listbox class="dropdown-content" selected="{{[[userData.groupId]]}}" attr-for-selected="value">
+                    <template is="dom-repeat" items="{{userGroups}}">
+                      <paper-item value="[[item.id]]">[[item.name]]</paper-item>
+                    </template>
+                  </paper-listbox>
+                </paper-dropdown-menu>
+              </ct-editable-switcher>
             </div>
           </div>
         </div>
 
-      </div>
+      </form>
 
       <!--todo: integrate with zendesk for ticketing-->
       <!--<div class="container-fluid">-->
@@ -253,7 +323,15 @@ View a single staff member
 
     </div> <!-- Staff table Container -->
 
-    </div>
+    <paper-dialog id="deleteModal" modal>
+      <h2>Confirm Delete</h2>
+      <p>Are you sure you want to delete this staff member?</p>
+      <div class="buttons">
+        <paper-button class="btn btn-link" dialog-dismiss>Cancel</paper-button>
+        <paper-button class="btn btn-primary" on-tap="_deleteUser" autofocus>Delete</paper-button>
+      </div>
+    </paper-dialog>
+
   </template>
 
   <script>
@@ -262,16 +340,57 @@ View a single staff member
           is: 'ct-view-single-staff',
 
           properties: {
-              userData : Object
+              userData : Object,
+              _isStateEdit: {
+                  type: Boolean,
+                  value: function(){ return false; }
+              },
+          },
+
+          listeners : {
+              'iron-form-presubmit': '_formHandler'
+          },
+
+          _openDeleteModal : function(){
+            this.$.deleteModal.open();
           },
 
           _deleteUser : function(){
               this.fire('deleteStaff', this.userData.id);
           },
 
-//        _editUser : function(){
-//            this.fire('editStaff', this.userData.id);
-//        },
+          _computeButtonText: function(isEdit){
+              return (isEdit) ? 'Save Details' : 'Edit Details';
+          },
+
+          _computeBtnStyle : function(isEdit){
+              return (isEdit) ? "btn-primary" : "btn-default";
+          },
+
+          _toggleStatus : function(){
+              this._isStateEdit = !this._isStateEdit;
+          },
+
+          _editBtnHandler : function(){
+              var form = this.$$('form');
+              if(this._isStateEdit){
+                  if(form.validate()){
+                      form.submit();
+                  }
+              } else {
+                  this._toggleStatus();
+              }
+          },
+
+          _formHandler : function(e){
+              var form = this.$$('form');
+
+              e.preventDefault();
+
+              this.fire('editStaff', form.serialize());
+              this._toggleStatus();
+          }
+
 
       });
   </script>
