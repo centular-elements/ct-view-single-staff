@@ -19,7 +19,7 @@
     "paper-listbox":"PolymerElements/paper-listbox#^1.1.2",
     "paper-dropdown-menu":"PolymerElements/paper-dropdown-menu#^1.5.0",
     "ct-shared-styles": "git://github.com/Centular/shared-styles.git",
-    "ct-ct-editable-switcher": "git://github.com/centular-elements/ct-editable-switcher.git"
+    "ct-editable-switcher": "git://github.com/centular-elements/ct-editable-switcher.git"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
