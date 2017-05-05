@@ -140,7 +140,7 @@ View a single staff member
             </div>
             <div class="col-xs-12 col-sm-4">
               <paper-button class="fancy margin-10v pull-right btn btn-danger" on-tap="_openDeleteModal">Delete</paper-button>
-              <paper-button class$="fancy margin-10v pull-right btn btn-primary [[_computeBtnStyle(_isStateEdit)]]" on-tap="_editBtnHandler">[[_computeButtonText(_isStateEdit)]]</paper-button>
+              <paper-button class$="fancy margin-10v pull-right btn [[_computeBtnStyle(_isStateEdit)]]" on-tap="_editBtnHandler">[[_computeButtonText(_isStateEdit)]]</paper-button>
             </div>
           </div>
         </div>
@@ -384,7 +384,7 @@ View a single staff member
           },
 
           _computeBtnStyle : function(isEdit){
-              return (isEdit) ? "btn-primary" : "btn-default";
+              return (isEdit) ? "btn-success" : "btn-primary";
           },
 
           _toggleStatus : function(){
