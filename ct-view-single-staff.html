@@ -137,7 +137,7 @@ View a single staff member
         <div class="col-xs-12 primary-box-container">
           <div class="row">
             <div class="col-xs-12 col-sm-8">
-              <h3 class="ct-header">[[userData.name]]</h3>
+              <h3 class="ct-header">[[userData.firstName]]</h3>
             </div>
             <div class="col-xs-12 col-sm-4">
               <paper-button class="fancy margin-10v pull-right btn btn-danger" on-tap="_openDeleteModal">Delete</paper-button>
@@ -190,7 +190,7 @@ View a single staff member
                           label="Email"
                           type="email"
                           name="email"
-                          value="[[userData.email]]"
+                          value="[[_computeContact(userData.contact, "email")]]"
                           required
                           auto-validate
                           error-message="Please enter a valid email address"></paper-input>
@@ -206,7 +206,7 @@ View a single staff member
                           type="text"
                           prevent-invalid-input
                           name="mobile"
-                          value="[[userData.mobile]]"
+                          value="[[_computeContact(userData.contact, "mobile")]]"
                           auto-validate
                           pattern="[0-9 +]"
                           char-counter
@@ -384,6 +384,16 @@ View a single staff member
           _toggleStatus : function(){
               this._isStateEdit = !this._isStateEdit;
           },
+
+          _computeContact : function(type, contactData) {
+              console.log(contactData);
+              var data = contactData.filter(function(o){
+                  return (o.contact.contactType[0].toLowerCase() === type);
+              })[0];
+
+              return (data) ? data.contact.contact : 'Not Available';
+          },
+
 
           _editBtnHandler : function(){
               var form = this.$$('form');
