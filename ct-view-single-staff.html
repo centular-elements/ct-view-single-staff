@@ -190,7 +190,7 @@ View a single staff member
                           label="Email"
                           type="email"
                           name="email"
-                          value="[[_computeContact( 'email', userData.contact)]]"
+                          value="[[_computeContact( 'email', userData.contacts)]]"
                           required
                           auto-validate
                           error-message="Please enter a valid email address"></paper-input>
@@ -206,7 +206,7 @@ View a single staff member
                           type="text"
                           prevent-invalid-input
                           name="mobile"
-                          value="[[_computeContact( 'email', userData.contacts)]]"
+                          value="[[_computeContact( 'mobile', userData.contacts)]]"
                           auto-validate
                           pattern="[0-9 +]"
                           char-counter
