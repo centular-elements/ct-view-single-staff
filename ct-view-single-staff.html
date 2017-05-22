@@ -1,4 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../gold-email-input/gold-email-input.html">
+<link rel="import" href="../gold-phone-input/gold-phone-input.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-input/paper-input-behavior.html">
 <link rel="import" href="../paper-button/paper-button.html">
@@ -185,32 +187,30 @@ View a single staff member
             <div class="col-sm-6 col-xs-12">
               <div class="form-group">
                 <ct-editable-switcher edit-mode$="[[_isStateEdit]]">
-                  <paper-input
+                  <gold-email-input
                           class="input-element"
-                          label="Email"
-                          type="email"
                           name="email"
+                          label="Email"
+                          prevent-invalid-input
                           value="[[_computeContact( 'email', userData.contacts)]]"
                           required
                           auto-validate
-                          error-message="Please enter a valid email address"></paper-input>
+                          error-message="Please enter a valid email address"></gold-email-input>
                 </ct-editable-switcher>
               </div>
             </div>
             <div class="col-sm-6 col-xs-12">
               <div class="form-group">
                 <ct-editable-switcher edit-mode$="[[_isStateEdit]]">
-                  <paper-input
-                          class="input-element"
-                          label="Mobile"
-                          type="text"
-                          prevent-invalid-input
-                          name="mobile"
-                          value="[[_computeContact( 'mobile', userData.contacts)]]"
-                          auto-validate
-                          pattern="[0-9 +]"
-                          char-counter
-                          error-message="Numbers only"></paper-input>
+                    <gold-phone-input country-code="27"
+                                      class="input-element"
+                                      prevent-invalid-input
+                                      name="mobile"
+                                      label="Mobile"
+                                      value="[[_computeContact( 'mobile', userData.contacts)]]"
+                                      auto-validate
+                                      char-counter
+                                      error-message="Invalid mobile number"></gold-phone-input>
                 </ct-editable-switcher>
               </div>
             </div>
