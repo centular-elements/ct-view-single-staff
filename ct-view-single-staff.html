@@ -137,7 +137,7 @@ View a single staff member
         <div class="col-xs-12 primary-box-container">
           <div class="row">
             <div class="col-xs-12 col-sm-8">
-              <h3 class="ct-header">[[userData.firstName]]</h3>
+              <h3 class="ct-header">[[userData.firstName]]&nbsp;[[userData.lastName]]</h3>
             </div>
             <div class="col-xs-12 col-sm-4">
               <paper-button class="fancy margin-10v pull-right btn btn-danger" on-tap="_openDeleteModal">Delete</paper-button>
@@ -206,7 +206,7 @@ View a single staff member
                           type="text"
                           prevent-invalid-input
                           name="mobile"
-                          value="[[_computeContact( 'email', userData.contact)]]"
+                          value="[[_computeContact( 'email', userData.contacts)]]"
                           auto-validate
                           pattern="[0-9 +]"
                           char-counter
