@@ -1,4 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../gold-email-input/gold-email-input.html">
+<link rel="import" href="../gold-phone-input/gold-phone-input.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-input/paper-input-behavior.html">
 <link rel="import" href="../paper-button/paper-button.html">
@@ -21,7 +23,6 @@ View a single staff member
 -->
 
 <dom-module id="ct-view-single-staff">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <template>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style is="custom-style">
@@ -60,31 +61,6 @@ View a single staff member
 
         --paper-icon-button-ink-color: var(--breadcrumb-icon-color-ripple);
       }
-      /* ### FONTS
-          @font-face {font-family: Avenir;
-              src: url(../fonts/avenir-lt-std-65-medium-58904de1bad61.otf);
-            /*  src: url("https://db.onlinewebfonts.com/t/2184e38751bd90baea505aef3f313bda.eot?#iefix") format("embedded-opentype"),
-              url("https://db.onlinewebfonts.com/t/2184e38751bd90baea505aef3f313bda.woff2") format("woff2"),
-              url("https://db.onlinewebfonts.com/t/2184e38751bd90baea505aef3f313bda.woff") format("woff"),
-              url("https://db.onlinewebfonts.com/t/2184e38751bd90baea505aef3f313bda.ttf") format("truetype"),
-              url("https://db.onlinewebfonts.com/t/2184e38751bd90baea505aef3f313bda.svg#Avenir") format("svg");
-              * /
-          }
-
-          @font-face {
-            font-family: avenirbl;
-            src: url(../fonts/avenir-lt-95-black-589044956bd1d.ttf);
-          }
-          @font-face {
-            font-family: avenirmd;
-            src: url(../fonts/avenir-lt-std-65-medium-58904de1bad61.otf);
-          }
-          @font-face {
-            font-family: avenirrg;
-            src: url(../fonts/avenir-next-w01-thin-58904b7a2923f.ttf);
-          }
-      */
-
 
       /* local color for button */
       paper-button.fancy {
@@ -108,58 +84,58 @@ View a single staff member
       }
 
 
-    .primary-box-container {
-      background: #3d3d3d;
-      margin-bottom: 40px;
+      .primary-box-container {
+        background: #3d3d3d;
+        margin-bottom: 40px;
 
-    }
-    .primary-box-container h3 {
-      color: #ffffff;
-      margin: 10px 0;
-    }
+      }
+      .primary-box-container h3 {
+        color: #ffffff;
+        margin: 10px 0;
+      }
 
-    .breadcrumb-icon {
+      .breadcrumb-icon {
         --paper-icon-button-ink-color: {#fff !important;};
-    }
+      }
 
-    .main-section .primary-box-container h3 {
-      font-size: 20px;
-      line-height: 21px;
-      padding: 0 15px;
-    }
+      .main-section .primary-box-container h3 {
+        font-size: 20px;
+        line-height: 21px;
+        padding: 0 15px;
+      }
 
 
     </style>
 
     <div class="main-section">
       <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12 primary-box-container">
-          <div class="row">
-            <div class="col-xs-12 col-sm-8">
-              <h3 class="ct-header">John Doe [[userData.name]]</h3>
-            </div>
-            <div class="col-xs-12 col-sm-4">
-              <paper-button class="fancy margin-10v pull-right btn btn-danger" on-tap="_openDeleteModal">Delete</paper-button>
-              <paper-button class$="fancy margin-10v pull-right btn [[_computeBtnStyle(_isStateEdit)]]" on-tap="_editBtnHandler">[[_computeButtonText(_isStateEdit)]]</paper-button>
+        <div class="row">
+          <div class="col-xs-12 primary-box-container">
+            <div class="row">
+              <div class="col-xs-12 col-sm-8">
+                <h3 class="ct-header">[[userData.firstName]]&nbsp;[[userData.lastName]]</h3>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <paper-button class="fancy margin-10v pull-right btn btn-danger" on-tap="_openDeleteModal">Delete</paper-button>
+                <paper-button class$="fancy margin-10v pull-right btn [[_computeBtnStyle(_isStateEdit)]]" on-tap="_editBtnHandler">[[_computeButtonText(_isStateEdit)]]</paper-button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-        <form class="" is="iron-form">
+        <form class="" is="iron-form" method="POST">
           <div class="row">
 
             <div class="col-sm-6 col-xs-12">
               <div class="form-group">
-                <ct-editable-switcher edit-mode$="[[_isStateEdit]]">
+                <ct-editable-switcher value-prop="[[userData.firstName]]" edit-mode$="[[_isStateEdit]]">
                   <paper-input
                           class="input-element"
                           autocapitalize
                           label="First Name"
                           type="text"
                           name="firstName"
-                          value="[[userData.firstName]]"
+                          value="{{userData.firstName}}"
                           required
                           auto-validate
                           error-message="Please provide a first name"></paper-input>
@@ -169,7 +145,7 @@ View a single staff member
             </div>
             <div class="col-sm-6 col-xs-12">
               <div class="form-group">
-                <ct-editable-switcher edit-mode$="[[_isStateEdit]]">
+                <ct-editable-switcher value-prop="[[userData.lastName]]" edit-mode$="[[_isStateEdit]]">
                   <paper-input
                           class="input-element"
                           label="Last Name"
@@ -184,47 +160,46 @@ View a single staff member
             </div>
             <div class="col-sm-6 col-xs-12">
               <div class="form-group">
-                <ct-editable-switcher edit-mode$="[[_isStateEdit]]">
-                  <paper-input
+                <ct-editable-switcher value-prop="[[_computeContact( 'email', userData.contacts)]]" edit-mode$="[[_isStateEdit]]">
+                  <gold-email-input
                           class="input-element"
-                          label="Email"
-                          type="email"
                           name="email"
-                          value="[[userData.email]]"
+                          label="Email"
+                          prevent-invalid-input
+                          value="[[_computeContact( 'email', userData.contacts)]]"
                           required
                           auto-validate
-                          error-message="Please enter a valid email address"></paper-input>
+                          error-message="Please enter a valid email address"></gold-email-input>
                 </ct-editable-switcher>
               </div>
             </div>
             <div class="col-sm-6 col-xs-12">
               <div class="form-group">
-                <ct-editable-switcher edit-mode$="[[_isStateEdit]]">
-                  <paper-input
-                          class="input-element"
-                          label="Mobile"
-                          type="text"
-                          prevent-invalid-input
-                          name="mobile"
-                          value="[[userData.mobile]]"
-                          auto-validate
-                          pattern="[0-9 +]"
-                          char-counter
-                          error-message="Numbers only"></paper-input>
+                <ct-editable-switcher value-prop="[[_computeContact( 'mobile', userData.contacts)]]" edit-mode$="[[_isStateEdit]]">
+                  <gold-phone-input country-code="27"
+                                    class="input-element"
+                                    prevent-invalid-input
+                                    name="mobile"
+                                    label="Mobile"
+                                    value="[[_computeContact( 'mobile', userData.contacts)]]"
+                                    auto-validate
+                                    char-counter
+                                    error-message="Invalid mobile number"></gold-phone-input>
                 </ct-editable-switcher>
               </div>
             </div>
             <div class="col-sm-6 col-xs-12">
               <div class="form-group">
-                <ct-editable-switcher edit-mode$="[[_isStateEdit]]">
+                <ct-editable-switcher value-prop="[[userData.groups]]" edit-mode$="[[_isStateEdit]]">
                   <paper-dropdown-menu
                           class="input-element"
                           label="Staff Group"
+                          name="group"
                           noink
                           no-animations
                           required
                           placeholder="Please select a staff group">
-                    <paper-listbox class="dropdown-content" selected="{{userData.group}}" attr-for-selected="key">
+                    <paper-listbox class="dropdown-content" selected="{{_computeUserGroup(userData.groups)}}" attr-for-selected="key">
                       <template is="dom-repeat" items="{{userGroups}}">
                         <paper-item key="[[item.id]]">[[item.name]]</paper-item>
                       </template>
@@ -236,103 +211,8 @@ View a single staff member
           </div>
 
         </form>
-
-        <!--todo: integrate with zendesk for ticketing-->
-        <!--<div class="container-fluid">-->
-        <!--<div class="row">-->
-        <!--<div class="col-xs-12">-->
-        <!--<div class="row">-->
-        <!--<h5>Filter</h5>-->
-        <!--<div class="col-xs-12 col-sm-4">-->
-        <!--<paper-input label="To" placeholder="Search for building name, address, status" type="text" name="To" value="" auto-validate pattern="[a-zA-Z 0-9]*" error-message="Require letters and numbers"></paper-input>-->
-        <!--</div>-->
-        <!--<div class="col-xs-12 col-sm-4">-->
-        <!--<paper-input label="From" placeholder="Search for building name, address, status" type="text" name="From" value="" auto-validate pattern="[a-zA-Z 0-9]*" error-message="Require letters and numbers"></paper-input>-->
-        <!--</div>-->
-        <!--<div class="col-xs-4 col-sm-2">-->
-        <!--<paper-button class="fancy" type="button" name="button">Filter</paper-button>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--</div>-->
-
-
-      <!--<div class="row">-->
-      <!--<div class="col-xs-12">-->
-      <!--<div class="table-responsive">-->
-      <!--<table class="table table-striped table-bordered table-hover">-->
-      <!-- <thead>-->
-      <!--<tr>-->
-      <!--<th>Ticket Ref</th>-->
-      <!--<th>Time Start</th>-->
-      <!--<th>Time End</th>-->
-      <!--<th>Duration</th>-->
-      <!--<th>Status</th>-->
-      <!--</tr>-->
-      <!--</thead> -->
-      <!--<tbody>-->
-      <!--<tr class="success">-->
-      <!--<th scope="row">1234567890</th>-->
-      <!--<td>2017 / 01 / 01 12:00</td>-->
-      <!--<td>2017 / 01 / 01 13:00</td>-->
-      <!--<td>50s</td>-->
-      <!--<td>Resolved</td>-->
-      <!--</tr>-->
-      <!--<tr class="warning">-->
-      <!--<th scope="row">1234567890</th>-->
-      <!--<td>2017 / 01 / 01 12:00</td>-->
-      <!--<td>2017 / 01 / 01 13:00</td>-->
-      <!--<td>50s</td>-->
-      <!--<td>Escalated</td>-->
-      <!--</tr>-->
-      <!--<tr class="success">-->
-      <!--<th scope="row">1234567890</th>-->
-      <!--<td>2017 / 01 / 01 12:00</td>-->
-      <!--<td>2017 / 01 / 01 13:00</td>-->
-      <!--<td>50s</td>-->
-      <!--<td>Resolved</td>-->
-      <!--</tr>-->
-      <!--<tr class="info">-->
-      <!--<th scope="row">1234567890</th>-->
-      <!--<td>2017 / 01 / 01 12:00</td>-->
-      <!--<td>2017 / 01 / 01 13:00</td>-->
-      <!--<td>50s</td>-->
-      <!--<td>In Progress</td>-->
-      <!--</tr>-->
-      <!--<tr class="info">-->
-      <!--<th scope="row">1234567890</th>-->
-      <!--<td>2017 / 01 / 01 12:00</td>-->
-      <!--<td>2017 / 01 / 01 13:00</td>-->
-      <!--<td>50s</td>-->
-      <!--<td>In Progress</td>-->
-      <!--</tr>-->
-      <!--</tbody>-->
-      <!--</table>-->
-      <!--</div>-->
-      <!--<nav aria-label="Page navigation">-->
-      <!--<ul class="pager">-->
-      <!--<li>-->
-      <!--<a href="#" aria-label="Previous">-->
-      <!--<span aria-hidden="true">&laquo;</span>-->
-      <!--</a>-->
-      <!--</li>-->
-      <!--<li><a href="#">1</a></li>-->
-      <!--<li><a href="#">2</a></li>-->
-      <!--<li><a href="#">3</a></li>-->
-      <!--<li><a href="#">4</a></li>-->
-      <!--<li><a href="#">5</a></li>-->
-      <!--<li>-->
-      <!--<a href="#" aria-label="Next">-->
-      <!--<span aria-hidden="true">&raquo;</span>-->
-      <!--</a>-->
-      <!--</li>-->
-      <!--</ul>-->
-      <!--</nav>-->
-      <!--</div>-->
-      <!--</div>-->
-
-    </div> <!-- Staff table Container -->
-</div>
+      </div> <!-- Staff table Container -->
+    </div>
     <paper-dialog
             id="deleteModal"
             modal
@@ -385,6 +265,19 @@ View a single staff member
               this._isStateEdit = !this._isStateEdit;
           },
 
+          _computeContact : function(type, contactData) {
+              var data = contactData.filter(function(o){
+                  return (o.contact.contactType[0].toLowerCase() === type);
+              })[0];
+
+              return (data) ? data.contact.contact : 'Not Available';
+          },
+
+          _computeUserGroup : function(groupArr){
+              return groupArr[0].id;
+          },
+
+
           _editBtnHandler : function(){
               var form = this.$$('form');
               if(this._isStateEdit){
@@ -397,11 +290,22 @@ View a single staff member
           },
 
           _formHandler : function(e){
-              var form = this.$$('form');
+
+              var form = this.$$('form'),
+                  params;
 
               e.preventDefault();
 
-              this.fire('editStaff', form.serialize());
+              params = form.serialize();
+              params.id = this.userData.id;
+
+              params.emailContactId = this.userData.contacts.filter(function(obj){ return (obj.contact.contactType[0].toLowerCase() == 'mobile'); })[0].id;
+
+              if(params.mobile.length > 0){
+                  params.mobileContactId = this.userData.contacts.filter(function(obj){ return (obj.contact.contactType[0].toLowerCase() == 'mobile'); })[0].id;
+              }
+
+              this.fire('editStaff', params);
               this._toggleStatus();
           },
 
