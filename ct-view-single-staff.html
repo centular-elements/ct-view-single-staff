@@ -12,6 +12,7 @@
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 
 <link rel="import" href="../iron-form/iron-form.html">
+<link rel="import" href="../ct-shared-styles/ct-application-theme.html">
 <link rel="import" href="../ct-editable-switcher/ct-editable-switcher.html">
 
 <!--
@@ -22,299 +23,340 @@ View a single staff member
 -->
 
 <dom-module id="ct-view-single-staff">
-  <template>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <style is="custom-style">
-      :host {
-        --paper-input-error: {
-          color:#00ff00;
-        };
+    <template>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <style is="custom-style">
+            :host {
+                --paper-input-error: {
+                    color:#00ff00;
+                };
 
-        --paper-input-container:  {
-          border-top:1px solid #ccc;
-          border-left:1px solid #ccc;
-          border-right:1px solid #ccc;
-          border-bottom: none;
-          padding: 0;
-          margin-bottom: 24px;
-        };
+                --paper-input-container:  {
+                    border-top:1px solid #ccc;
+                    border-left:1px solid #ccc;
+                    border-right:1px solid #ccc;
+                    border-bottom: none;
+                    padding: 0;
+                    margin-bottom: 24px;
+                };
 
-        /*padding to move from border */
-        --paper-input-container-input: {
-          padding-left: 10px;
-          left: auto;
-        };
+                /*padding to move from border */
+                --paper-input-container-input: {
+                    padding-left: 10px;
+                    left: auto;
+                };
 
-        --paper-input-container-label: {
-          margin-left: 10px;
-        };
-        --paper-input-container-label-floating: {
-          margin-left: 10px;
-        };
+                --paper-input-container-label: {
+                    margin-left: 10px;
+                };
+                --paper-input-container-label-floating: {
+                    margin-left: 10px;
+                };
 
-        --paper-input-error: {
-          left: auto !important;
-          right: 20px !important;
-          font-style: italic;
-        };
+                --paper-input-error: {
+                    left: auto !important;
+                    right: 20px !important;
+                    font-style: italic;
+                };
 
-        --paper-icon-button-ink-color: var(--breadcrumb-icon-color-ripple);
-      }
+                --paper-icon-button-ink-color: var(--breadcrumb-icon-color-ripple);
+            }
 
-      /* local color for button */
-      paper-button.fancy {
-        margin-top: 3px;
+            /* local color for button */
+            paper-button.fancy {
+                margin-top: 3px;
 
-      }
-      /*local dropdown menu */
-      paper-dropdown-menu.custom-dropdown {
-        width: 100%;
-        --paper-input-container: {
-          border-top:1px solid #ccc;
-          border-left:1px solid #ccc;
-          border-right:1px solid #ccc;
-          border-bottom: none;
-          padding: 0;
-          margin-bottom: 8px;
-        };
-        --paper-input-container-input: {
-          padding-left: 10px;
-        };
-      }
-
-
-      .primary-box-container {
-        background: #3d3d3d;
-        margin-bottom: 40px;
-
-      }
-      .primary-box-container h3 {
-        color: #ffffff;
-        margin: 10px 0;
-      }
-
-      .breadcrumb-icon {
-        --paper-icon-button-ink-color: {#fff !important;};
-      }
-
-      .main-section .primary-box-container h3 {
-        font-size: 20px;
-        line-height: 21px;
-        padding: 0 15px;
-      }
+            }
+            /*local dropdown menu */
+            paper-dropdown-menu.custom-dropdown {
+                width: 100%;
+                --paper-input-container: {
+                    border-top:1px solid #ccc;
+                    border-left:1px solid #ccc;
+                    border-right:1px solid #ccc;
+                    border-bottom: none;
+                    padding: 0;
+                    margin-bottom: 8px;
+                };
+                --paper-input-container-input: {
+                    padding-left: 10px;
+                };
+            }
 
 
-    </style>
+            .primary-box-container {
+                background: #3d3d3d;
+                margin-bottom: 40px;
 
-    <div class="main-section">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-12 primary-box-container">
-            <div class="row">
-              <div class="col-xs-12 col-sm-8">
-                <h3 class="ct-header">[[userData.firstName]]&nbsp;[[userData.lastName]]</h3>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <paper-button class="fancy margin-10v pull-right btn btn-danger" on-tap="_openDeleteModal">Delete</paper-button>
-                <paper-button class$="fancy margin-10v pull-right btn [[_computeBtnStyle(_isStateEdit)]]" on-tap="_editBtnHandler">[[_computeButtonText(_isStateEdit)]]</paper-button>
-              </div>
-            </div>
-          </div>
+            }
+            .primary-box-container h3 {
+                color: #ffffff;
+                margin: 10px 0;
+            }
+
+            .breadcrumb-icon {
+                --paper-icon-button-ink-color: {#fff !important;};
+            }
+
+            .main-section .primary-box-container h3 {
+                font-size: 20px;
+                line-height: 21px;
+                padding: 0 15px;
+            }
+
+
+        </style>
+
+        <div class="main-section">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12 primary-box-container">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8">
+                                <h3 class="ct-header">[[userData.firstName]]&nbsp;[[userData.lastName]]</h3>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <paper-button class="fancy margin-10v pull-right btn btn-danger" on-tap="_openDeleteModal">Delete</paper-button>
+                                <paper-button class$="fancy margin-10v pull-right btn [[_computeBtnStyle(_isStateEdit)]]" on-tap="_editBtnHandler">[[_computeButtonText(_isStateEdit)]]</paper-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="" is="iron-form" method="POST">
+                    <div class="row">
+
+                        <div class="col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <ct-editable-switcher value-prop="[[userData.firstName]]" edit-mode$="[[_isStateEdit]]">
+                                    <paper-input
+                                            class="input-element"
+                                            autocapitalize
+                                            label="First Name"
+                                            type="text"
+                                            name="firstName"
+                                            value="{{userData.firstName}}"
+                                            required
+                                            auto-validate
+                                            error-message="Please provide a first name"></paper-input>
+                                </ct-editable-switcher>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <ct-editable-switcher value-prop="[[userData.lastName]]" edit-mode$="[[_isStateEdit]]">
+                                    <paper-input
+                                            class="input-element"
+                                            label="Last Name"
+                                            type="text"
+                                            name="lastName"
+                                            value="[[userData.lastName]]"
+                                            required
+                                            auto-validate
+                                            error-message="Please provide a last name"></paper-input>
+                                </ct-editable-switcher>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <ct-editable-switcher value-prop="[[_computeContact( 'email', userData.contacts)]]" edit-mode$="[[_isStateEdit]]">
+                                    <gold-email-input
+                                            class="input-element"
+                                            name="email"
+                                            label="Email"
+                                            prevent-invalid-input
+                                            value="[[_computeContact( 'email', userData.contacts)]]"
+                                            required
+                                            auto-validate
+                                            error-message="Please enter a valid email address"></gold-email-input>
+                                </ct-editable-switcher>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <ct-editable-switcher value-prop="[[_computeContact( 'mobile', userData.contacts)]]" edit-mode$="[[_isStateEdit]]">
+                                    <gold-phone-input country-code="27"
+                                                      class="input-element"
+                                                      prevent-invalid-input
+                                                      name="mobile"
+                                                      label="Mobile"
+                                                      value="[[_computeContact( 'mobile', userData.contacts)]]"
+                                                      auto-validate
+                                                      char-counter
+                                                      error-message="Invalid mobile number"></gold-phone-input>
+                                </ct-editable-switcher>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <paper-input
+                                        label="Staff Group"
+                                        type="text"
+                                        disabled
+                                        value="[[_computeUserGroup(userData.groups)]]"
+                                ></paper-input>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div> <!-- Staff table Container -->
         </div>
-
-        <form class="" is="iron-form" method="POST">
-          <div class="row">
-
-            <div class="col-sm-6 col-xs-12">
-              <div class="form-group">
-                <ct-editable-switcher value-prop="[[userData.firstName]]" edit-mode$="[[_isStateEdit]]">
-                  <paper-input
-                          class="input-element"
-                          autocapitalize
-                          label="First Name"
-                          type="text"
-                          name="firstName"
-                          value="{{userData.firstName}}"
-                          required
-                          auto-validate
-                          error-message="Please provide a first name"></paper-input>
-                </ct-editable-switcher>
-
-              </div>
+        <paper-dialog
+                id="deleteModal"
+                modal
+                on-iron-overlay-opened="_patchOverlay">
+            <h2>Confirm Delete</h2>
+            <p>Are you sure you want to delete this staff member?</p>
+            <div class="buttons">
+                <paper-button class="btn btn-link" dialog-dismiss>Cancel</paper-button>
+                <paper-button class="btn btn-primary" on-tap="_deleteUser" autofocus raised>Delete</paper-button>
             </div>
-            <div class="col-sm-6 col-xs-12">
-              <div class="form-group">
-                <ct-editable-switcher value-prop="[[userData.lastName]]" edit-mode$="[[_isStateEdit]]">
-                  <paper-input
-                          class="input-element"
-                          label="Last Name"
-                          type="text"
-                          name="lastName"
-                          value="[[userData.lastName]]"
-                          required
-                          auto-validate
-                          error-message="Please provide a last name"></paper-input>
-                </ct-editable-switcher>
-              </div>
-            </div>
-            <div class="col-sm-6 col-xs-12">
-              <div class="form-group">
-                <ct-editable-switcher value-prop="[[_computeContact( 'email', userData.contacts)]]" edit-mode$="[[_isStateEdit]]">
-                  <gold-email-input
-                          class="input-element"
-                          name="email"
-                          label="Email"
-                          prevent-invalid-input
-                          value="[[_computeContact( 'email', userData.contacts)]]"
-                          required
-                          auto-validate
-                          error-message="Please enter a valid email address"></gold-email-input>
-                </ct-editable-switcher>
-              </div>
-            </div>
-            <div class="col-sm-6 col-xs-12">
-              <div class="form-group">
-                <ct-editable-switcher value-prop="[[_computeContact( 'mobile', userData.contacts)]]" edit-mode$="[[_isStateEdit]]">
-                  <gold-phone-input country-code="27"
-                                    class="input-element"
-                                    prevent-invalid-input
-                                    name="mobile"
-                                    label="Mobile"
-                                    value="[[_computeContact( 'mobile', userData.contacts)]]"
-                                    auto-validate
-                                    char-counter
-                                    error-message="Invalid mobile number"></gold-phone-input>
-                </ct-editable-switcher>
-              </div>
-            </div>
-            <div class="col-sm-6 col-xs-12">
-              <div class="form-group">
-                <ct-editable-switcher value-prop="[[userData.groups]]" edit-mode$="[[_isStateEdit]]">
-                  <paper-dropdown-menu
-                          class="input-element"
-                          label="Staff Group"
-                          name="group"
-                          noink
-                          no-animations
-                          required
-                          placeholder="Please select a staff group">
-                    <paper-listbox class="dropdown-content" selected="{{_computeUserGroup(userData.groups)}}" attr-for-selected="key">
-                      <template is="dom-repeat" items="{{userGroups}}">
-                        <paper-item key="[[item.id]]">[[item.name]]</paper-item>
-                      </template>
-                    </paper-listbox>
-                  </paper-dropdown-menu>
-                </ct-editable-switcher>
-              </div>
-            </div>
-          </div>
+        </paper-dialog>
 
-        </form>
-      </div> <!-- Staff table Container -->
-    </div>
-    <paper-dialog
-            id="deleteModal"
-            modal
-            on-iron-overlay-opened="_patchOverlay">
-      <h2>Confirm Delete</h2>
-      <p>Are you sure you want to delete this staff member?</p>
-      <div class="buttons">
-        <paper-button class="btn btn-link" dialog-dismiss>Cancel</paper-button>
-        <paper-button class="btn btn-primary" on-tap="_deleteUser" autofocus raised>Delete</paper-button>
-      </div>
-    </paper-dialog>
+    </template>
 
-  </template>
+    <script>
+        Polymer({
 
-  <script>
-      Polymer({
+            is: 'ct-view-single-staff',
 
-          is: 'ct-view-single-staff',
+            properties: {
+                userData : Object,
+                _isStateEdit: {
+                    type: Boolean,
+                    value: function(){ return false; }
+                },
 
-          properties: {
-              userData : Object,
-              _isStateEdit: {
-                  type: Boolean,
-                  value: function(){ return false; }
-              },
-              userGroups : Array,
-          },
+            },
 
-          listeners : {
-              'iron-form-presubmit': '_formHandler'
-          },
+            listeners : {
+                'iron-form-presubmit': '_formHandler'
+            },
 
-          _openDeleteModal : function(){
-              this.$.deleteModal.open();
-          },
+            _openDeleteModal : function(){
+                this.$.deleteModal.open();
+            },
 
-          _deleteUser : function(){
-              this.fire('deleteStaff', this.userData.id);
-          },
+            _deleteUser : function(){
+                this.fire('deleteStaff', this.userData.id);
+            },
 
-          _computeButtonText: function(isEdit){
-              return (isEdit) ? 'Save Details' : 'Edit Details';
-          },
+            _computeButtonText: function(isEdit){
+                return (isEdit) ? 'Save Details' : 'Edit Details';
+            },
 
-          _computeBtnStyle : function(isEdit){
-              return (isEdit) ? "btn-success" : "btn-primary";
-          },
+            _computeBtnStyle : function(isEdit){
+                return (isEdit) ? "btn-success" : "btn-primary";
+            },
 
-          _toggleStatus : function(){
-              this._isStateEdit = !this._isStateEdit;
-          },
+            _toggleStatus : function(){
+                this._isStateEdit = !this._isStateEdit;
+            },
 
-          _computeContact : function(type, contactData) {
-              var data = contactData.filter(function(o){
-                  return (o.contact.contactType[0].toLowerCase() === type);
-              })[0];
+            _computeContact : function(type, contactData) {
+                var data = contactData.filter(function(o){
+                    return (o.contact.contactType.toLowerCase() === type);
+                })[0];
 
-              return (data) ? data.contact.contact : 'Not Available';
-          },
+                return (data) ? data.contact.contact : 'Not Available';
+            },
 
-          _computeUserGroup : function(groupArr){
-              return groupArr[0].id;
-          },
+            _computeContactData : function(type, value, contactData) {
+                var userData = contactData.filter(function(o){
+                    return (o.contact.contactType.toLowerCase() === type);
+                })[0];
+
+                var data;
+
+                if(userData){
+
+                    var data = {
+                        "id": userData.id,
+                        "contact": {
+                            "contactType": userData.contact.contactType
+                        }
+                    };
+
+                    if(userData && userData.contact.contact != value) {
+                        data.contact.contact = value;
+                    } else {
+                        data.contact.contact = userData.contact.contact
+                    }
+
+                }
+
+                return (userData) ? data : null;
+
+            },
+
+            _computeUserGroup : function(groupArr){
+                return groupArr[0].name;
+            },
 
 
-          _editBtnHandler : function(){
-              var form = this.$$('form');
-              if(this._isStateEdit){
-                  if(form.validate()){
-                      form.submit();
-                  }
-              } else {
-                  this._toggleStatus();
-              }
-          },
+            _editBtnHandler : function(){
+                var form = this.$$('form');
+                if(this._isStateEdit){
+                    if(form.validate()){
+                        form.submit();
+                    }
+                } else {
+                    this._toggleStatus();
+                }
+            },
 
-          _formHandler : function(e){
+            _formHandler : function(e){
 
-              var form = this.$$('form'),
-                  params;
+                var form = this.$$('form').serialize(),
+                    params = {},
+                    userHasMobile,
+                    email,
+                    mobile;
 
-              e.preventDefault();
+                e.preventDefault();
 
-              params = form.serialize();
-              params.id = this.userData.id;
+                params.id = this.userData.id;
+                params.firstName = form.firstName;
+                params.lastName = form.lastName;
+                params.contacts = [];
+                params.newContacts = [];
+                params.additionalInfo = [];
 
-              params.emailContactId = this.userData.contacts.filter(function(obj){ return (obj.contact.contactType[0].toLowerCase() == 'mobile'); })[0].id;
+//              populate email object
+                email = this._computeContactData('email', form.email, this.userData.contacts);
 
-              if(params.mobile.length > 0){
-                  params.mobileContactId = this.userData.contacts.filter(function(obj){ return (obj.contact.contactType[0].toLowerCase() == 'mobile'); })[0].id;
-              }
+                userHasMobile = (this._computeContact('mobile', this.userData.contacts) !== 'Not Available');
 
-              this.fire('editStaff', params);
-              this._toggleStatus();
-          },
+                if(form.mobile && userHasMobile) {
+//                  if mobile exists
+                    mobile = this._computeContactData('mobile', form.mobile, this.userData.contacts);
 
-          _patchOverlay: function (e) {
-              if (e.target.withBackdrop) {
-                  e.target.parentNode.insertBefore(e.target.backdropElement, e.target);
-              }
-          },
+                } else if(form.mobile && !userHasMobile) {
+//                  if new mobile
+                    params.newContacts.push({'contact' : form.mobile, 'contactType' : 'mobile'})
+                }
+
+                if(email){
+                    params.contacts.push(email);
+                }
+
+                if(mobile){
+                    params.contacts.push(mobile);
+                }
+
+                this.fire('editStaff', params);
+                this._toggleStatus();
+            },
+
+            _patchOverlay: function (e) {
+                if (e.target.withBackdrop) {
+                    e.target.parentNode.insertBefore(e.target.backdropElement, e.target);
+                }
+            },
 
 
-      });
-  </script>
+        });
+    </script>
 </dom-module>
