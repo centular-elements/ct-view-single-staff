@@ -22,7 +22,8 @@
     "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^1.5.0",
     "ct-shared-styles": "git://github.com/Centular/shared-styles.git",
     "ct-editable-switcher": "git://github.com/centular-elements/ct-editable-switcher.git",
-    "paper-dialog": "PolymerElements/paper-dialog#^1.1.0"
+    "paper-dialog": "PolymerElements/paper-dialog#^1.1.0",
+    "ct-user-group-membership-tree": "centular-elements/ct-user-group-membership-tree"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
