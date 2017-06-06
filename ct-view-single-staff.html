@@ -6,15 +6,17 @@
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../paper-item/paper-icon-item.html">
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 
 <link rel="import" href="../iron-form/iron-form.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+
 <link rel="import" href="../ct-shared-styles/ct-application-theme.html">
 <link rel="import" href="../ct-editable-switcher/ct-editable-switcher.html">
-<link rel="import" href="../ct-user-group-membership-tree/ct-user-group-membership-tree.html">
+
 
 
 <!--
@@ -191,22 +193,19 @@ View a single staff member
                             </div>
                         </div>
                         <div class="col-sm-6 col-xs-12">
-                            <div class="form-group">
-                                <paper-input
-                                        label="Staff Group"
-                                        type="text"
-                                        disabled
-                                        value="[[_computeUserGroup(userData.groups)]]"
-                                ></paper-input>
-                            </div>
+                            <span>Member of User Groups</span>
+                            <paper-listbox disabled$="[[!_isStateEdit]]">
+                                <paper-icon-item>
+                                    <iron-icon icon="social:group" slot="item-icon"></iron-icon>
+                                    Test Group
+                                </paper-icon-item>
+                            </paper-listbox>
                         </div>
                     </div>
 
                 </form>
             </div> <!-- Staff table Container -->
         </div>
-
-        <ct-user-group-membership-tree user-id="[[ userData.id ]]" user-groups-parent-id="[[ membershipRootUserGroupId ]]"></ct-user-group-membership-tree>
 
         <paper-dialog
                 id="deleteModal"
@@ -296,11 +295,6 @@ View a single staff member
                 return (userData) ? data : null;
 
             },
-
-            _computeUserGroup : function(groupArr){
-                return groupArr[0].name;
-            },
-
 
             _editBtnHandler : function(){
                 var form = this.$$('form');
