@@ -16,6 +16,7 @@
 
 <link rel="import" href="../ct-shared-styles/ct-application-theme.html">
 <link rel="import" href="../ct-editable-switcher/ct-editable-switcher.html">
+<link rel="import" href="../ct-user-group-membership-editor/ct-user-group-membership-editor.html">
 
 
 
@@ -193,16 +194,13 @@ View a single staff member
                             </div>
                         </div>
                         <div class="col-sm-6 col-xs-12">
-                            <span>Member of User Groups</span>
-                            <paper-listbox disabled$="[[!_isStateEdit]]">
-                                <paper-icon-item>
-                                    <iron-icon icon="social:group" slot="item-icon"></iron-icon>
-                                    Test Group
-                                </paper-icon-item>
-                            </paper-listbox>
+                            <ct-user-group-membership-editor
+                                root-user-group-id="[[ membershipRootUserGroupId ]]"
+                                member-of-groups="{{userData.groups}}"
+                                disabled$="[[ _isStateEdit ]]"
+                            ></ct-user-group-membership-editor>
                         </div>
                     </div>
-
                 </form>
             </div> <!-- Staff table Container -->
         </div>
