@@ -197,7 +197,7 @@ View a single staff member
                             <ct-user-group-membership-editor
                                 root-user-group-id="[[ membershipRootUserGroupId ]]"
                                 member-of-groups="{{userData.groups}}"
-                                disabled$="[[ _isStateEdit ]]"
+                                disabled$="[[ !_isStateEdit ]]"
                             ></ct-user-group-membership-editor>
                         </div>
                     </div>
