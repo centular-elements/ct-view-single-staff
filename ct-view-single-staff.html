@@ -344,6 +344,9 @@ View a single staff member
                     params.contacts.push(mobile);
                 }
 
+                // this.userData.groups are updated via ct-user-group-membership-editor bi-directional binding
+                params.groupIds = this.userData.groups.map(function(g){ return g.id });
+
                 this.fire('editStaff', params);
                 this._toggleStatus();
             },
