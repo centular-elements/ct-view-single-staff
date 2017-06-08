@@ -22,7 +22,7 @@
     "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^1.5.0",
     "ct-shared-styles": "git://github.com/Centular/shared-styles.git",
     "ct-editable-switcher": "git://github.com/centular-elements/ct-editable-switcher.git",
-    "ct-user-group-membership-editor": "centular-elements/ct-user-group-membership-editor.git",
+    "ct-user-group-membership-editor": "centular-elements/ct-user-group-membership-editor",
     "paper-dialog": "PolymerElements/paper-dialog#^1.1.0"
   },
   "devDependencies": {
